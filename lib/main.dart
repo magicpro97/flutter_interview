@@ -143,7 +143,7 @@ class MyHomePage extends StatelessWidget {
             border: Border()),
         height: 100.0,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             BottomBarButton(
               label: 'Home',
@@ -183,10 +183,10 @@ class BottomBarButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      padding: EdgeInsets.only(left: promoteText != null ? 10.0 : 22.0),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -205,24 +205,29 @@ class BottomBarButton extends StatelessWidget {
               )
             ],
           ),
-          Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              Icon(
-                Icons.lens,
-                color: promoteText != null ? Colors.pink : Colors.white,
-                size: 36.0,
+          if (promoteText != null)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 40.0),
+              child: Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Icon(
+                    Icons.lens,
+                    color: Colors.pink,
+                    size: 36.0,
+                  ),
+                  Text(
+                    promoteText ?? '20%',
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .body1
+                        .copyWith(color: Colors.white, fontSize: 10.0),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
-              Text(
-                promoteText ?? '20%',
-                style: Theme.of(context)
-                    .textTheme
-                    .body1
-                    .copyWith(color: Colors.white, fontSize: 10.0),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          )
+            )
         ],
       ),
     );
