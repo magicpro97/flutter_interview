@@ -143,7 +143,7 @@ class MyHomePage extends StatelessWidget {
             border: Border()),
         height: 100.0,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             BottomBarButton(
               label: 'Home',
@@ -157,6 +157,7 @@ class MyHomePage extends StatelessWidget {
             BottomBarButton(
               label: 'Profile',
               icon: CupertinoIcons.person,
+              promoteText: '20%',
             ),
           ],
         ),
@@ -166,6 +167,7 @@ class MyHomePage extends StatelessWidget {
 }
 
 class BottomBarButton extends StatelessWidget {
+  final String promoteText;
   final bool selected;
   final String label;
   final IconData icon;
@@ -175,31 +177,54 @@ class BottomBarButton extends StatelessWidget {
     @required this.label,
     @required this.icon,
     this.selected = false,
+    this.promoteText,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        selected
-            ? Icon(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(
                 icon,
-                color: Colors.pink,
-                size: 32.0,
-              )
-            : Icon(
-                icon,
-                size: 32.0,
-              ),
-        SizedBox(height: 5.0),
-        Text(
-          label,
-          style: Theme.of(context).textTheme.body1.apply(
                 color: selected ? Colors.pink : Colors.black,
+                size: 32.0,
               ),
-        )
-      ],
+              SizedBox(height: 5.0),
+              Text(
+                label,
+                style: Theme.of(context).textTheme.body1.apply(
+                      color: selected ? Colors.pink : Colors.black,
+                    ),
+              )
+            ],
+          ),
+          Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              Icon(
+                Icons.lens,
+                color: promoteText != null ? Colors.pink : Colors.white,
+                size: 36.0,
+              ),
+              Text(
+                promoteText ?? '20%',
+                style: Theme.of(context)
+                    .textTheme
+                    .body1
+                    .copyWith(color: Colors.white, fontSize: 10.0),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }
